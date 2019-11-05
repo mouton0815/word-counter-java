@@ -42,8 +42,7 @@ public class WordCounterTest {
 
     private void countAndVerify(final BlockingQueue<String> wordQueue, final List<WordCount> refList) {
         final WordCounter counter = new WordCounter(wordQueue);
-        counter.run(); // TODO: Should return list directly
-        final List<WordCount> list = counter.get();
+        final List<WordCount> list = counter.count();
         Assert.assertEquals(list, refList);
     }
 }

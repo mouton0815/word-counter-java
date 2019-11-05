@@ -4,6 +4,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.wordcounter.Constants.STREAM_END;
+
 
 class Tokenizer {
     private final BlockingQueue<String> wordQueue;
@@ -28,7 +30,7 @@ class Tokenizer {
 
     void close() {
         try {
-            wordQueue.put("");
+            wordQueue.put(STREAM_END);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

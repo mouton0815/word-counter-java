@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
+import static com.example.wordcounter.Constants.STREAM_END;
 
-class WordCounter implements Runnable {
+
+class WordCounter {
     private final BlockingQueue<String> wordQueue;
     private final Map<String, Integer> wordCounts;
 
@@ -15,22 +17,18 @@ class WordCounter implements Runnable {
         this.wordCounts = new HashMap<>();
     }
 
-    @Override
-    public void run() {
+    List<WordCount> count() {
         try {
             while (true) {
                 final String word = wordQueue.take();
-                if (word.equals("")) { // Empty string is end-of-stream sign
+                if (word.equals(STREAM_END)) { // Empty string is end-of-stream sign
                     break;
                 }
                 wordCounts.merge(word, 1, Integer::sum);
             }
         } catch (final InterruptedException e) {
-            // TODO: DO something
+            throw new RuntimeException(e);
         }
-    }
-
-    List<WordCount> get() {
         return new WordCountMapper().apply(wordCounts);
     }
 }
