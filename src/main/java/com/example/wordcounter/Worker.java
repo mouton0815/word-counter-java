@@ -1,11 +1,14 @@
 package com.example.wordcounter;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Logger;
 
 import static com.example.wordcounter.Constants.STREAM_END;
 
 
 class Worker implements Runnable {
+    private static final Logger log = Logger.getLogger(Worker.class.getName());
+
     private final int id;
     private final BlockingQueue<String> pathQueue;
     private final FileReader fileReader;
@@ -19,15 +22,15 @@ class Worker implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.printf("Worker %d starts\n", id);
+            log.info(String.format("Worker %d starts", id));
             String path;
             while (!(path = pathQueue.take()).isEmpty()) {
-                System.out.printf("Worker %d reads '%s'\n", id, path);
+                log.info(String.format("Worker %d reads '%s'", id, path));
                 fileReader.read(path);
             }
             // Inform other workers that pathQueue is empty
             pathQueue.put(STREAM_END);
-            System.out.printf("Worker %d leaves\n", id);
+            log.info(String.format("Worker %d leaves", id));
         }
         catch (final InterruptedException e) {
             throw new RuntimeException(e);

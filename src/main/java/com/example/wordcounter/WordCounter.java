@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
-import static com.example.wordcounter.Constants.STREAM_END;
-
 
 class WordCounter {
     private final BlockingQueue<String> wordQueue;
@@ -21,7 +19,6 @@ class WordCounter {
         try {
             String word;
             while (!(word = wordQueue.take()).isEmpty()) {
-                System.out.printf("---> Counter gets '%s'\n", word);
                 wordCounts.merge(word, 1, Integer::sum);
             }
         } catch (final InterruptedException e) {
