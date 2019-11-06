@@ -19,11 +19,9 @@ class WordCounter {
 
     List<WordCount> count() {
         try {
-            while (true) {
-                final String word = wordQueue.take();
-                if (word.equals(STREAM_END)) { // Empty string is end-of-stream sign
-                    break;
-                }
+            String word;
+            while (!(word = wordQueue.take()).isEmpty()) {
+                System.out.printf("---> Counter gets '%s'\n", word);
                 wordCounts.merge(word, 1, Integer::sum);
             }
         } catch (final InterruptedException e) {

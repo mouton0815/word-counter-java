@@ -16,7 +16,7 @@ public class Main {
         final BlockingQueue<String> pathQueue = new LinkedBlockingQueue<>(1000);
         final BlockingQueue<String> wordQueue = new LinkedBlockingQueue<>(1000);
 
-        final FileReader fileReader = new FileReader(new Tokenizer(wordQueue));
+        final FileReader fileReader = new FileReaderImpl(new Tokenizer(wordQueue));
         final WorkerPool workerPool = new WorkerPool(numWorkers, pathQueue, fileReader);
         new Thread(workerPool).start();
 
