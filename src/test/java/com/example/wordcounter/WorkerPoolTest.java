@@ -3,6 +3,8 @@ package com.example.wordcounter;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,14 +26,14 @@ public class WorkerPoolTest {
     }
 
     private void runWorkerPoolAndVerify(final int pathCount) throws InterruptedException {
-        final BlockingQueue<String> pathQueue = new LinkedBlockingQueue<>(pathCount + 1);
+        final BlockingQueue<Path> pathQueue = new LinkedBlockingQueue<>(pathCount + 1);
         final List<String> refList = new LinkedList<>();
         for (int i = 0; i < pathCount; i++) {
             final String path = String.format("%02d", i);
             refList.add(path);
-            pathQueue.put(path);
+            pathQueue.put(Paths.get(path));
         }
-        pathQueue.put(STREAM_END);
+        pathQueue.put(Paths.get(STREAM_END));
 
         final FileReaderMock fileReader = new FileReaderMock();
         final WorkerPool workerPool = new WorkerPool(4, pathQueue, fileReader);

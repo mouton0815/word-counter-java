@@ -1,6 +1,11 @@
 package com.example.wordcounter;
 
-// TODO: Real implementation, tests
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
+
 class FileReaderImpl implements FileReader {
     private final Tokenizer tokenizer;
 
@@ -9,8 +14,13 @@ class FileReaderImpl implements FileReader {
     }
 
     @Override
-    public void read(final String path) {
-        tokenizer.tokenize(path);
+    public void read(final Path path) {
+        try (Stream<String> stream = Files.lines(path)) {
+            stream.forEach(tokenizer::tokenize);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

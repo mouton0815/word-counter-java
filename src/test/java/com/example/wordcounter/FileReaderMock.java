@@ -1,5 +1,6 @@
 package com.example.wordcounter;
 
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,8 +17,8 @@ class FileReaderMock implements FileReader {
     }
 
     @Override
-    public void read(String path) {
-        result.add(path);
+    public void read(Path path) {
+        result.add(path.toString());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.wordcounter;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collectors;
@@ -8,10 +9,10 @@ import java.util.stream.IntStream;
 
 class WorkerPool implements Runnable {
     private final int numWorkers;
-    private final BlockingQueue<String> pathQueue;
+    private final BlockingQueue<Path> pathQueue;
     private final FileReader fileReader;
 
-        WorkerPool(int numWorkers, BlockingQueue<String> pathQueue, FileReader fileReader) {
+        WorkerPool(int numWorkers, BlockingQueue<Path> pathQueue, FileReader fileReader) {
         this.numWorkers = numWorkers;
         this.pathQueue = pathQueue;
         this.fileReader = fileReader;

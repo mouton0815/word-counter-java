@@ -3,6 +3,8 @@ package com.example.wordcounter;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -22,7 +24,7 @@ public class WorkerTest {
     }
 
     private void workAndVerify(String... paths) throws InterruptedException {
-        final BlockingQueue<String> pathQueue = new LinkedBlockingQueue<>();
+        final BlockingQueue<Path> pathQueue = new LinkedBlockingQueue<>();
         final FileReaderMock fileReader = new FileReaderMock();
         final Worker worker = new Worker(1, pathQueue, fileReader);
 
@@ -30,9 +32,9 @@ public class WorkerTest {
         thread.start();
 
         for (String path: paths) {
-            pathQueue.put(path);
+            pathQueue.put(Paths.get(path));
         }
-        pathQueue.put(STREAM_END);
+        pathQueue.put(Paths.get(STREAM_END));
 
         thread.join();
 
