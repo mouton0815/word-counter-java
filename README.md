@@ -20,6 +20,24 @@ occurrences for every word.
 * A [main](src/main/java/com/example/wordcounter/Main.java) program that wires the classes, starts the path collector, the worker pool,
 and the word counter. Finally, it outputs the word lists ordered by decreasing number of occurences. 
 
-# Running
+# Building
+```
+gradle build
+```
 
-TODO: Add Gradle command
+# Running
+```
+gradle run --args="<folder>"
+```
+For example, count the words of all files in folder `./data` and write the results in file `wordcounts.txt`:
+```
+gradle run --quiet --args="./data" > wordcounts.txt
+```
+
+# Testing
+```
+gradle test
+```
+
+# License
+MIT
