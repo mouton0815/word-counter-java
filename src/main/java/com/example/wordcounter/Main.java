@@ -2,6 +2,8 @@ package com.example.wordcounter;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -22,6 +24,9 @@ public class Main {
         }
         final Path rootPath = Paths.get(args[0]);
 
+        // Measure time including setup
+        final Instant startTime = Instant.now();
+
         final int numWorkers = Math.max(Runtime.getRuntime().availableProcessors() - 2, 1);
         log.info(String.format("#workers: %d", numWorkers));
 
@@ -40,5 +45,8 @@ public class Main {
         for (final WordCount item: wordCounts) {
             System.out.printf("%3d - %s\n", item.getCount(), item.getWord());
         }
+
+        final Instant endTime = Instant.now();
+        log.info(String.format("Elapsed time %s", Duration.between(startTime, endTime)));
     }
 }
