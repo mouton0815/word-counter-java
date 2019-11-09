@@ -1,8 +1,8 @@
 # Word Counter (Java Version)
 Counts the number of occurrences of every word in all text files within a folder.
 
-Goals of this project are:
-* Refresh Java 8 knowledge.
+Goals of this project were:
+* Refresh my Java 8 knowledge.
 * Compare with implementations of the same project in C++, [Go](https://github.com/mouton0815/word-counter-go), Java, Node, Python.
 
 The project consists of
