@@ -16,7 +16,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        final Path rootPath = Paths.get("./data");
+        if (args.length != 1) {
+            System.err.printf("Syntax %s <folder>\n", Main.class.getName());
+            return;
+        }
+        final Path rootPath = Paths.get(args[0]);
 
         final int numWorkers = Math.max(Runtime.getRuntime().availableProcessors() - 2, 1);
         log.info(String.format("#workers: %d", numWorkers));
