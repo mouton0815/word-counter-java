@@ -20,6 +20,17 @@ occurrences for every word.
 * A [main](src/main/java/com/example/wordcounter/Main.java) program that wires the classes, starts the path collector, the worker pool,
 and the word counter. Finally, it outputs the word lists ordered by decreasing number of occurences. 
 
+Some observations:
+* The Java variant is roughly 70% _slower_ than the [Go variant](https://github.com/mouton0815/word-counter-go),
+of course excluding the build time.
+* In contrast to Go channels, Java's [BlockingQueue](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/BlockingQueue.html)
+cannot be closed. To tell a worker that no further data is arriving, the producer needs to insert an _end-of-stream_ object.
+Because one end-of-stream event is seen by one worker only, the stopping worker must re-publish the end-of-stream event.
+* Surprisingly the streaming-compatible [Files.walk](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#walk-java.nio.file.Path-java.nio.file.FileVisitOption...-)
+function is completely broken, see https://stackoverflow.com/a/22868706. I needed to use the older
+[Files.walkFileTree](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#walkFileTree-java.nio.file.Path-java.nio.file.FileVisitor-)
+for rescue.
+
 # Building
 ```
 gradle build
