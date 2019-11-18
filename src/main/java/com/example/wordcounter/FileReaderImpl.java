@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 
+// TODO: Unit tests (see word-counter-cpp)
 class FileReaderImpl implements FileReader {
     private final Tokenizer tokenizer;
 

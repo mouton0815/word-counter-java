@@ -26,7 +26,7 @@ class Worker implements Runnable {
         try {
             log.info(String.format("Worker %d starts", id));
             Path path;
-            while (!(path = pathQueue.take()).toString().isEmpty()) {
+            while (!(path = pathQueue.take()).toString().equals(STREAM_END)) {
                 log.info(String.format("Worker %d reads '%s'", id, path));
                 fileReader.read(path);
             }

@@ -11,21 +11,21 @@ import java.util.Map;
 
 public class WordCountMapperTest {
     @Test
-    public void testWordSliceSortingEmpty() {
+    public void testWordCountMapperEmpty() {
         final Map<String, Integer> map = ImmutableMap.of();
         final List<WordCount> list = ImmutableList.of();
         mapAndVerify(map, list);
     }
 
     @Test
-    public void testWordSliceSortingSimple() {
+    public void testWordCountMapperSimple() {
         final Map<String, Integer> map = ImmutableMap.of("foo", 1);
         final List<WordCount> list = ImmutableList.of(new WordCount("foo", 1));
         mapAndVerify(map, list);
     }
 
     @Test
-    public void testWordSliceSortingSecondary() {
+    public void testWordCountMapperSecondary() {
         final Map<String, Integer> map = ImmutableMap.of("foo", 2, "bar", 1, "baz", 2);
         final List<WordCount> list = ImmutableList.of(
             new WordCount("baz", 2),
@@ -35,7 +35,7 @@ public class WordCountMapperTest {
     }
 
     @Test
-    public void testWordSliceSortingUnicode() {
+    public void testWordCountMapperUnicode() {
         final Map<String, Integer> map = ImmutableMap.of("über", 1, "Zuse", 1, "Ödem", 1);
         final List<WordCount> list = ImmutableList.of(
             new WordCount("Ödem", 1),
