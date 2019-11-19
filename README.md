@@ -3,7 +3,8 @@ Counts the number of occurrences of every word in all text files within a folder
 
 Goals of this project were:
 * Refresh my Java 8 knowledge.
-* Compare with implementations of the same project in C++, [Go](https://github.com/mouton0815/word-counter-go), Java, Node, Python.
+* Compare with implementations of the same project in [C++](https://github.com/mouton0815/word-counter-cpp),
+[Go](https://github.com/mouton0815/word-counter-go), Node, Python, Rust.
 
 The project consists of
 * A [path collector](src/main/java/com/example/wordcounter/PathCollector.java) that retrieves the path names of all `*.txt` files
