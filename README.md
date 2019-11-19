@@ -18,7 +18,7 @@ for their terminations.
 * A [word counter](src/main/java/com/example/wordcounter/WordCounter.java) that listens to `wordQueue` and counts the number of
 occurrences for every word.
 * A [main](src/main/java/com/example/wordcounter/Main.java) program that wires the classes, starts the path collector, the worker pool,
-and the word counter. Finally, it outputs the word lists ordered by decreasing number of occurences. 
+and the word counter. Finally, it outputs the word lists ordered by decreasing number of occurrences. 
 
 Some observations:
 * The Java variant is roughly 70% _slower_ than the [Go variant](https://github.com/mouton0815/word-counter-go),

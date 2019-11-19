@@ -17,7 +17,7 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         if (args.length != 1) {
             System.err.printf("Syntax %s <folder>\n", Main.class.getName());
             return;
@@ -27,6 +27,7 @@ public class Main {
         // Measure time including setup
         final Instant startTime = Instant.now();
 
+        // Reserve one core for current thread (the counter), and another one for the path collector
         final int numWorkers = Math.max(Runtime.getRuntime().availableProcessors() - 2, 1);
         log.info(String.format("#workers: %d", numWorkers));
 
@@ -35,10 +36,12 @@ public class Main {
 
         final FileReader fileReader = new FileReaderImpl(new Tokenizer(wordQueue));
         final WorkerPool workerPool = new WorkerPool(numWorkers, pathQueue, fileReader);
-        new Thread(workerPool).start();
+        final Thread poolThread = new Thread(workerPool);
+        poolThread.start();
 
         final PathCollector collector = new PathCollector(rootPath, pathQueue);
-        new Thread(collector).start();
+        final Thread collThread = new Thread(collector);
+        collThread.start();
 
         final WordCounter counter = new WordCounter(wordQueue);
         final List<WordCount> wordCounts = counter.count();
@@ -46,7 +49,10 @@ public class Main {
             System.out.printf("%3d - %s\n", item.getCount(), item.getWord());
         }
 
+        poolThread.join();
+        collThread.join();
+
         final Instant endTime = Instant.now();
-        log.info(String.format("Elapsed time %s", Duration.between(startTime, endTime)));
+        log.info(String.format("Elapsed time: %s", Duration.between(startTime, endTime)));
     }
 }

@@ -12,7 +12,7 @@ class WorkerPool implements Runnable {
     private final BlockingQueue<Path> pathQueue;
     private final FileReader fileReader;
 
-        WorkerPool(int numWorkers, BlockingQueue<Path> pathQueue, FileReader fileReader) {
+    WorkerPool(int numWorkers, BlockingQueue<Path> pathQueue, FileReader fileReader) {
         this.numWorkers = numWorkers;
         this.pathQueue = pathQueue;
         this.fileReader = fileReader;
